@@ -1,13 +1,14 @@
 package com.lee.thanossnap
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import kotlinx.android.synthetic.main.activity_snap.*
 import kotlinx.android.synthetic.main.content_snap.*
+import java.util.*
+import kotlin.random.Random
 
 class SnapActivity : AppCompatActivity() {
     private val avengersAdapter = AvengersAdapter(this)
@@ -18,23 +19,48 @@ class SnapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_snap)
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Thanos snap his finger", Snackbar.LENGTH_SHORT).show()
+
+
+        fab.setOnClickListener {
+            val animationDrawable = fab.drawable as AnimationDrawable
+            animationDrawable.start()
             disappearAHalf()
         }
         avengersAdapter.mData = generateData()
         recycler_view.adapter = avengersAdapter
         val itemAnimation = DisappearItemAnimation()
-        itemAnimation.removeDuration = 2000
+        itemAnimation.removeDuration = 4000
         recycler_view.itemAnimator = itemAnimation
         recycler_view.setHasFixedSize(true)
         recycler_view.layoutManager = GridLayoutManager(this, 2, RecyclerView.VERTICAL, false)
 
     }
 
+
     private fun disappearAHalf() {
-        list.removeAt(2)
-        avengersAdapter.notifyItemRemoved(2)
+
+        if (list.isNotEmpty()) {
+
+            val size = list.size
+            val set = TreeSet<Int>(kotlin.Comparator { o1, o2 ->
+                o2 - o1
+            })
+
+            while (set.size < size / 2) {
+
+                val index = Random.nextInt(size)
+                set.add(index)
+            }
+
+
+
+            for (i in set) {
+                list.removeAt(i)
+                avengersAdapter.notifyItemRemoved(i)
+            }
+
+
+        }
     }
 
 

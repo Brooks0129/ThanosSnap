@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ThanosSnap</string>
     <string name="title_activity_snap">SnapActivity</string>
+    <string name="title_activity_anim">AnimActivity</string>
 </resources>
