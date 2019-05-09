@@ -1,7 +1,8 @@
-package com.lee.thanossnap.anim
+package com.lee.avengergone
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.TimeInterpolator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -38,18 +39,26 @@ class DisappearView @JvmOverloads constructor(
         }
     }
 
-    fun execute(view: View) {
+    @JvmOverloads
+    fun execute(
+        view: View,
+        duration: Long = 4000,
+        interpolator: TimeInterpolator = AccelerateInterpolator(0.5f),
+        needDisappear: Boolean = true
+    ) {
         val rect = Rect()
         view.getGlobalVisibleRect(rect)
         val location = IntArray(2)
         getLocationOnScreen(location)
         rect.offset(0, -location[1])
         val bitmap = createBitmapFromView(view) ?: return
-        view.alpha = 0f
+        if (needDisappear) {
+            view.alpha = 0f
+        }
         DisappearAnimator(this, bitmap, rect).run {
-            duration = 4000
+            this.duration = duration
+            this.interpolator = interpolator
             setFloatValues(0f, 1F)
-            interpolator = AccelerateInterpolator(0.5f)
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
                     mDisappearAnimators.remove(animation)

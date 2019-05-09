@@ -1,10 +1,10 @@
-package com.lee.thanossnap.anim
+package com.lee.avengergone
 
 import android.animation.ValueAnimator
 import android.graphics.*
 import android.view.View
 import kotlin.random.Random
-import android.graphics.PathMeasure as PathMeasure1
+import android.graphics.PathMeasure
 
 class DisappearAnimator(
     root: DisappearView,
@@ -118,7 +118,7 @@ class DisappearAnimator(
 
     override fun start() {
         super.start()
-        mRoot!!.invalidate(mRect)
+        mRoot!!.invalidate()
     }
 
     fun recycle() {
@@ -153,7 +153,7 @@ class DisappearAnimator(
                 x = (originX + faction * 300).toInt()
                 y = (originY - faction * 300).toInt()
                 alpha = 1 - faction
-                val pathMeasure = android.graphics.PathMeasure()
+                val pathMeasure = PathMeasure()
                 pathMeasure.setPath(path, false)
                 val pathLength = pathMeasure.length
                 val pos = FloatArray(2)

@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.lee.thanossnap.anim.DisappearView
+import com.lee.avengergone.DisappearView
 
 
 class AvengersAdapter(activity: Activity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -55,7 +55,7 @@ class DisappearItemAnimation : BaseItemAnimator() {
         val textView = holder.textView
 
         val disappearView = DisappearView.attach(view.context as Activity)
-        disappearView.execute(view)
+        disappearView.execute(view,removeDuration)
         val animation = view.animate()
         animation.alpha(0F).translationYBy(200F).setDuration(removeDuration).setListener(object :
             AnimatorListenerAdapter() {
